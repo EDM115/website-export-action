@@ -125,15 +125,22 @@ function input(name, def) {
     page.setDefaultNavigationTimeout(120000)
     page.setDefaultTimeout(60000)
 
-    // Navigate and wait for network idle first paint
+    // Navigate and wait for the DOM to be ready
     await page.goto(url, {
-      waitUntil: ["load", "domcontentloaded", "networkidle0"],
+      waitUntil: "domcontentloaded",
+      timeout: 120_000,
     })
 
-    // First pass cleanup (plugin handles many cases)
+    // First pass cleanup
     if (clean !== "off") {
       await applyCleanup(page, { level: clean })
     }
+
+    // Notion and many sites render into <main> or role="main".
+    await page.waitForSelector(
+      'main, [role="main"], article, .notion, [data-root], [data-page-root]',
+      { timeout: 60_000 },
+    )
 
     // Some CMPs trigger a reload - wait again if it happens
     const navPromise = new Promise((resolve) => {
@@ -146,8 +153,10 @@ function input(name, def) {
     })
     const didReload = await navPromise
     if (didReload) {
-      await page.waitForNetworkIdle({ idleTime: 1500, timeout: 45000 })
-      await applyCleanup(page, { level: clean })
+      await page.waitForSelector('main, [role="main"], article', {
+        timeout: 60_000,
+      })
+      if (clean !== "off") await applyCleanup(page, { level: clean })
     }
 
     // Expand <details>, "show more", etc.
@@ -170,7 +179,26 @@ function input(name, def) {
       window.scrollTo(0, max)
       await sleep(300)
     })
-    await page.waitForNetworkIdle({ idleTime: 1200, timeout: 30000 })
+
+    // Soft-idle: wait until DOM stops changing for 1.2s (up to 45s)
+    await page.waitForFunction(
+      () => {
+        window.___lastMut = window.___lastMut || Date.now()
+        if (!window.___obs) {
+          window.___obs = new MutationObserver(
+            () => (window.___lastMut = Date.now()),
+          )
+          window.___obs.observe(document, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            characterData: true,
+          })
+        }
+        return Date.now() - window.___lastMut > 1200
+      },
+      { timeout: 45_000, polling: 200 },
+    )
 
     // Export
     const { finalName, finalPath } = await doExports(page, {
