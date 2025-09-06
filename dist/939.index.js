@@ -2,10 +2,10 @@ export const id = 939;
 export const ids = [939];
 export const modules = {
 
-/***/ 47064:
+/***/ 7064:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var Buffer = (__webpack_require__(20181).Buffer);
+var Buffer = (__webpack_require__(181).Buffer);
 
 var CRC_TABLE = [
   0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419,
@@ -120,10 +120,10 @@ module.exports = crc32;
 
 /***/ }),
 
-/***/ 40354:
+/***/ 354:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var once = __webpack_require__(98068);
+var once = __webpack_require__(8068);
 
 var noop = function() {};
 
@@ -223,17 +223,17 @@ module.exports = eos;
 
 /***/ }),
 
-/***/ 81939:
+/***/ 1939:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const debug = __webpack_require__(69592)('extract-zip')
+const debug = __webpack_require__(9592)('extract-zip')
 // eslint-disable-next-line node/no-unsupported-features/node-builtins
-const { createWriteStream, promises: fs } = __webpack_require__(79896)
-const getStream = __webpack_require__(45923)
-const path = __webpack_require__(16928)
-const { promisify } = __webpack_require__(39023)
+const { createWriteStream, promises: fs } = __webpack_require__(9896)
+const getStream = __webpack_require__(5923)
+const path = __webpack_require__(6928)
+const { promisify } = __webpack_require__(9023)
 const stream = __webpack_require__(2203)
-const yauzl = __webpack_require__(62067)
+const yauzl = __webpack_require__(2067)
 
 const openZip = promisify(yauzl.open)
 const pipeline = promisify(stream.pipeline)
@@ -403,17 +403,17 @@ module.exports = async function (zipPath, opts) {
 
 /***/ }),
 
-/***/ 66668:
+/***/ 6668:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-var fs = __webpack_require__(79896);
-var util = __webpack_require__(39023);
+var fs = __webpack_require__(9896);
+var util = __webpack_require__(9023);
 var stream = __webpack_require__(2203);
 var Readable = stream.Readable;
 var Writable = stream.Writable;
 var PassThrough = stream.PassThrough;
-var Pend = __webpack_require__(83295);
-var EventEmitter = (__webpack_require__(24434).EventEmitter);
+var Pend = __webpack_require__(3295);
+var EventEmitter = (__webpack_require__(4434).EventEmitter);
 
 exports.createFromBuffer = createFromBuffer;
 exports.createFromFd = createFromFd;
@@ -706,7 +706,7 @@ function createFromFd(fd, options) {
 
 /***/ }),
 
-/***/ 74318:
+/***/ 4318:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
@@ -765,13 +765,13 @@ module.exports = options => {
 
 /***/ }),
 
-/***/ 45923:
+/***/ 5923:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
-const {constants: BufferConstants} = __webpack_require__(20181);
-const pump = __webpack_require__(41378);
-const bufferStream = __webpack_require__(74318);
+const {constants: BufferConstants} = __webpack_require__(181);
+const pump = __webpack_require__(1378);
+const bufferStream = __webpack_require__(4318);
 
 class MaxBufferError extends Error {
 	constructor() {
@@ -832,10 +832,10 @@ module.exports.MaxBufferError = MaxBufferError;
 
 /***/ }),
 
-/***/ 98068:
+/***/ 8068:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var wrappy = __webpack_require__(58092)
+var wrappy = __webpack_require__(8092)
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
 
@@ -881,7 +881,7 @@ function onceStrict (fn) {
 
 /***/ }),
 
-/***/ 83295:
+/***/ 3295:
 /***/ ((module) => {
 
 module.exports = Pend;
@@ -943,15 +943,15 @@ function pendGo(self, fn) {
 
 /***/ }),
 
-/***/ 41378:
+/***/ 1378:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var once = __webpack_require__(98068)
-var eos = __webpack_require__(40354)
+var once = __webpack_require__(8068)
+var eos = __webpack_require__(354)
 var fs
 
 try {
-  fs = __webpack_require__(79896) // we only need fs to get the ReadStream and WriteStream prototypes
+  fs = __webpack_require__(9896) // we only need fs to get the ReadStream and WriteStream prototypes
 } catch (e) {}
 
 var noop = function () {}
@@ -1036,7 +1036,7 @@ module.exports = pump
 
 /***/ }),
 
-/***/ 58092:
+/***/ 8092:
 /***/ ((module) => {
 
 // Returns a wrapper function that returns a wrapped callback
@@ -1076,15 +1076,15 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 62067:
+/***/ 2067:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-var fs = __webpack_require__(79896);
-var zlib = __webpack_require__(43106);
-var fd_slicer = __webpack_require__(66668);
-var crc32 = __webpack_require__(47064);
-var util = __webpack_require__(39023);
-var EventEmitter = (__webpack_require__(24434).EventEmitter);
+var fs = __webpack_require__(9896);
+var zlib = __webpack_require__(3106);
+var fd_slicer = __webpack_require__(6668);
+var crc32 = __webpack_require__(7064);
+var util = __webpack_require__(9023);
+var EventEmitter = (__webpack_require__(4434).EventEmitter);
 var Transform = (__webpack_require__(2203).Transform);
 var PassThrough = (__webpack_require__(2203).PassThrough);
 var Writable = (__webpack_require__(2203).Writable);

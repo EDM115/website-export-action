@@ -2,7 +2,7 @@ export const id = 772;
 export const ids = [772];
 export const modules = {
 
-/***/ 32312:
+/***/ 2312:
 /***/ ((module) => {
 
 function isBuffer (value) {
@@ -198,10 +198,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ 40354:
+/***/ 354:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var once = __webpack_require__(98068);
+var once = __webpack_require__(8068);
 
 var noop = function() {};
 
@@ -301,7 +301,7 @@ module.exports = eos;
 
 /***/ }),
 
-/***/ 97494:
+/***/ 7494:
 /***/ ((module) => {
 
 module.exports = class FixedFIFO {
@@ -347,10 +347,10 @@ module.exports = class FixedFIFO {
 
 /***/ }),
 
-/***/ 35000:
+/***/ 5000:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const FixedFIFO = __webpack_require__(97494)
+const FixedFIFO = __webpack_require__(7494)
 
 module.exports = class FastFIFO {
   constructor (hwm) {
@@ -402,10 +402,10 @@ module.exports = class FastFIFO {
 
 /***/ }),
 
-/***/ 98068:
+/***/ 8068:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var wrappy = __webpack_require__(58092)
+var wrappy = __webpack_require__(8092)
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
 
@@ -451,15 +451,15 @@ function onceStrict (fn) {
 
 /***/ }),
 
-/***/ 41378:
+/***/ 1378:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var once = __webpack_require__(98068)
-var eos = __webpack_require__(40354)
+var once = __webpack_require__(8068)
+var eos = __webpack_require__(354)
 var fs
 
 try {
-  fs = __webpack_require__(79896) // we only need fs to get the ReadStream and WriteStream prototypes
+  fs = __webpack_require__(9896) // we only need fs to get the ReadStream and WriteStream prototypes
 } catch (e) {}
 
 var noop = function () {}
@@ -547,12 +547,12 @@ module.exports = pump
 /***/ 9129:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const { EventEmitter } = __webpack_require__(24434)
+const { EventEmitter } = __webpack_require__(4434)
 const STREAM_DESTROYED = new Error('Stream was destroyed')
 const PREMATURE_CLOSE = new Error('Premature close')
 
-const FIFO = __webpack_require__(35000)
-const TextDecoder = __webpack_require__(12302)
+const FIFO = __webpack_require__(5000)
+const TextDecoder = __webpack_require__(2302)
 
 // if we do a future major, expect queue microtask to be there always, for now a bit defensive
 const qmt = typeof queueMicrotask === 'undefined' ? fn => global.process.nextTick(fn) : queueMicrotask
@@ -1735,13 +1735,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 38772:
+/***/ 8772:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-const tar = __webpack_require__(82753)
-const pump = __webpack_require__(41378)
-const fs = __webpack_require__(79896)
-const path = __webpack_require__(16928)
+const tar = __webpack_require__(2753)
+const pump = __webpack_require__(1378)
+const fs = __webpack_require__(9896)
+const path = __webpack_require__(6928)
 
 const win32 = (global.Bare ? global.Bare.platform : process.platform) === 'win32'
 
@@ -2127,7 +2127,7 @@ function strip (map, level) {
 
 /***/ }),
 
-/***/ 14504:
+/***/ 4504:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const constants = { // just for envs without fs
@@ -2140,7 +2140,7 @@ const constants = { // just for envs without fs
 }
 
 try {
-  module.exports = (__webpack_require__(79896).constants) || constants
+  module.exports = (__webpack_require__(9896).constants) || constants
 } catch {
   module.exports = constants
 }
@@ -2148,13 +2148,13 @@ try {
 
 /***/ }),
 
-/***/ 55908:
+/***/ 5908:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const { Writable, Readable, getStreamError } = __webpack_require__(9129)
-const FIFO = __webpack_require__(35000)
-const b4a = __webpack_require__(32312)
-const headers = __webpack_require__(86263)
+const FIFO = __webpack_require__(5000)
+const b4a = __webpack_require__(2312)
+const headers = __webpack_require__(6263)
 
 const EMPTY = b4a.alloc(0)
 
@@ -2561,10 +2561,10 @@ function overflow (size) {
 
 /***/ }),
 
-/***/ 86263:
+/***/ 6263:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-const b4a = __webpack_require__(32312)
+const b4a = __webpack_require__(2312)
 
 const ZEROS = '0000000000000000000'
 const SEVENS = '7777777777777777777'
@@ -2889,23 +2889,23 @@ function addLength (str) {
 
 /***/ }),
 
-/***/ 82753:
+/***/ 2753:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-exports.extract = __webpack_require__(55908)
-exports.pack = __webpack_require__(14016)
+exports.extract = __webpack_require__(5908)
+exports.pack = __webpack_require__(4016)
 
 
 /***/ }),
 
-/***/ 14016:
+/***/ 4016:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const { Readable, Writable, getStreamError } = __webpack_require__(9129)
-const b4a = __webpack_require__(32312)
+const b4a = __webpack_require__(2312)
 
-const constants = __webpack_require__(14504)
-const headers = __webpack_require__(86263)
+const constants = __webpack_require__(4504)
+const headers = __webpack_require__(6263)
 
 const DMODE = 0o755
 const FMODE = 0o644
@@ -3192,11 +3192,11 @@ function mapWritable (buf) {
 
 /***/ }),
 
-/***/ 12302:
+/***/ 2302:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const PassThroughDecoder = __webpack_require__(58520)
-const UTF8Decoder = __webpack_require__(92590)
+const PassThroughDecoder = __webpack_require__(8520)
+const UTF8Decoder = __webpack_require__(2590)
 
 module.exports = class TextDecoder {
   constructor (encoding = 'utf8') {
@@ -3263,10 +3263,10 @@ function normalizeEncoding (encoding) {
 
 /***/ }),
 
-/***/ 58520:
+/***/ 8520:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const b4a = __webpack_require__(32312)
+const b4a = __webpack_require__(2312)
 
 module.exports = class PassThroughDecoder {
   constructor (encoding) {
@@ -3289,10 +3289,10 @@ module.exports = class PassThroughDecoder {
 
 /***/ }),
 
-/***/ 92590:
+/***/ 2590:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const b4a = __webpack_require__(32312)
+const b4a = __webpack_require__(2312)
 
 /**
  * https://encoding.spec.whatwg.org/#utf-8-decoder
@@ -3400,7 +3400,7 @@ module.exports = class UTF8Decoder {
 
 /***/ }),
 
-/***/ 58092:
+/***/ 8092:
 /***/ ((module) => {
 
 // Returns a wrapper function that returns a wrapped callback

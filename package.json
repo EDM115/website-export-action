@@ -1,6 +1,6 @@
 {
   "name": "website-export-action",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "type": "module",
   "main": "index.js",
@@ -10,8 +10,6 @@
     "@puppeteer/browsers": "^2.10.8",
     "fs-extra": "^11.3.1",
     "puppeteer-core": "^24.19.0",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "turndown": "^7.2.1"
   },
   "devDependencies": {

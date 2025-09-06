@@ -9,9 +9,7 @@ import {
   resolveBuildId,
   detectBrowserPlatform,
 } from "@puppeteer/browsers"
-import puppeteerExtra from "puppeteer-extra"
-import { executablePath as _dummy } from "puppeteer-core" // keep peer dep happy
-import AdblockerPlugin from "puppeteer-extra-plugin-adblocker"
+import puppeteer from "puppeteer-core"
 
 import { deriveName } from "./utils/name.js"
 import { applyCleanup } from "./utils/cleanup.js"
@@ -77,21 +75,9 @@ function input(name, def) {
   const tmpDir = path.join(outDir, `.capture-${Date.now()}`)
   await fs.ensureDir(tmpDir)
 
-  // Configure puppeteer-extra plugins based on cleaning level
-  const adblockOpts = {}
-  if (clean === "banners") {
-    adblockOpts.blockTrackersAndAnnoyances = true // cookie/GDPR popups etc.
-  } else if (clean === "complete") {
-    adblockOpts.blockTrackers = true
-    adblockOpts.blockTrackersAndAnnoyances = true
-  }
-  if (clean !== "off") {
-    puppeteerExtra.use(AdblockerPlugin(adblockOpts)) // blocks many cookie/annoyance lists
-  }
-
   const chromePath = await ensureChrome()
 
-  const browser = await puppeteerExtra.launch({
+  const browser = await puppeteer.launch({
     executablePath: chromePath,
     headless: "new",
     defaultViewport: { width: 1366, height: 900 },
@@ -108,6 +94,34 @@ function input(name, def) {
 
   try {
     const page = await browser.newPage()
+
+    // If "complete", block obvious ad/track/trash hosts at network level
+    if (clean === "complete") {
+      const BLOCK = [
+        /doubleclick\.net/i,
+        /googlesyndication\.com/i,
+        /adservice\.google\.com/i,
+        /adsystem\.com/i,
+        /adnxs\.com/i,
+        /criteo\.com/i,
+        /taboola\.com/i,
+        /outbrain\.com/i,
+        /facebook\.net/i,
+        /connect\.facebook\.net/i,
+        /quantserve\.com/i,
+        /moatads\.com/i,
+        /scorecardresearch\.com/i,
+        /zedo\.com/i,
+        /rubiconproject\.com/i,
+        /1rx\.io/i,
+      ]
+      await page.route("**/*", (route) => {
+        const url = route.request().url()
+        if (BLOCK.some((rx) => rx.test(url))) return route.abort()
+        route.continue()
+      })
+    }
+
     page.setDefaultNavigationTimeout(120000)
     page.setDefaultTimeout(60000)
 
