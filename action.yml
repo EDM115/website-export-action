@@ -1,0 +1,30 @@
+name: "Export website"
+description: "Load a webpage in real Chrome, clean banners/ads, expand content, lazy-scroll, then export as raw/pdf/png/jpg/webp/md"
+author: "EDM115"
+branding:
+  icon: "aperture"
+  color: "orange"
+
+inputs:
+  webpage:
+    description: "The URL to capture"
+    required: true
+  clean:
+    description: '"off" | "banners" (default) | "complete"'
+    required: false
+    default: "banners"
+  format:
+    description: '"pdf" | "raw" | "md" | "jpg" | "webp" | "png"'
+    required: true
+  name:
+    description: "Override output file name (no extension)"
+    required: false
+outputs:
+  name:
+    description: "Final filename (with extension)"
+  path:
+    description: "Absolute path to the output file"
+
+runs:
+  using: "node24"
+  main: "index.js"
